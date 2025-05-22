@@ -1,4 +1,3 @@
-# Bài 1: Hiển thị ảnh gốc và histogram RGB
 import cv2
 import matplotlib.pyplot as plt
 

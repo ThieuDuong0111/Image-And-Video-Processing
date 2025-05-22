@@ -1,0 +1,268 @@
+Ex1_1:
+
+1. Convert BGR to RGB:
+OpenCV loads images in BGR format by default, but Matplotlib expects RGB. So the image is converted from BGR to RGB for accurate color display.
+
+2. Split Color Channels (R, G, B):
+The image is separated into three individual color channels RGB
+
+3. Create Color-Isolated Images:
+For each channel, an image is created where only one color channel is preserved, and the other two are set to zero:
+
+4. Merge Channels into RGB Images:
+These single-channel images are stacked back into RGB format using np.stack(..., axis=2), producing visualizations that show only the contribution of each individual color channel.
+
+Ex1_2:
+
+1. Convert BGR to RGB:
+The image is initially loaded in BGR format by OpenCV. It's converted to RGB so that the colors display correctly with Matplotlib.
+
+2. Split Color Channels (R, G, B):
+The RGB image is split into its three individual color channels: RGB
+
+3. Reorder Channels to BRG:
+A new image is created by rearranging the channel order:
+Instead of (R, G, B), the channels are ordered as (B, R, G).
+This results in a color-shifted version of the original image.
+
+4. Stack Channels into a New Image:
+The reordered channels are combined into a new 3-channel image using np.stack(..., axis=2).
+
+Ex1_3:
+
+1. Convert BGR to RGB:
+The image is initially loaded in BGR format by OpenCV. It’s converted to RGB for correct color display with Matplotlib.
+
+2. Apply Gamma Correction:
+Gamma correction is applied with gamma = 1.2 using the formula:
+This adjusts the brightness non-linearly to enhance image contrast and details.
+
+3. Clamp Pixel Values:
+After gamma correction, pixel values are clipped to the valid range [0, 255] and converted back to 8-bit unsigned integers.
+
+4. Darken the Image by 80%:
+The gamma-corrected image is further darkened by multiplying pixel values by 0.2 (keeping only 20% brightness).
+
+Ex1_4:
+
+1. Convert Color Image to Grayscale:
+The original BGR color image is converted to a single-channel grayscale image.
+
+2. Define Quantization Function:
+A function quantize(img, bits) reduces the number of grayscale intensity levels to 
+This is done by:
+- Dividing pixel values by the size of each quantization interval (256 / levels).
+- Using floor to map pixel values to the nearest quantization level.
+- Multiplying back to get the quantized intensity values.
+
+3. Apply Quantization at Different Bit Depths:
+The grayscale image is quantized to 2, 4, 6, and 8 bits.
+- 2-bit quantization produces very coarse intensity steps (4 levels).
+- 8-bit quantization is nearly identical to the original grayscale image.
+
+4. Visualize Quantized Images:
+Each quantized image shows progressively finer intensity levels, demonstrating how bit depth affects image quality.
+
+
+Ex2_1:
+
+1. Logarithmic Transformation (LMF)
+2. Piecewise Linear Transformation (PLMF):
+
+Ex2_2:
+
+1. Flip image left to right:
+Use cv2.flip with parameter 1 to flip the image horizontally (equivalent to MATLAB’s fliplr).
+The output image is a mirror reflection along the vertical axis (left to right).
+
+2. Rotate image 180 degrees clockwise:
+Use cv2.rotate with cv2.ROTATE_180 to rotate the image by 180 degrees.
+This operation is equivalent to flipping the image both horizontally and vertically.
+
+3. Crop the central region of the image, half the size of the original:
+Calculate the starting coordinates so that the cropped region is centered and has half the width and height of the original image.
+Extract this central portion of the image.
+
+Ex2_3:
+
+1. Read the grayscale image:
+The image is read in grayscale mode (cv2.IMREAD_GRAYSCALE).
+If the input image is color, it is automatically converted to grayscale.
+
+2. Plot the histogram of the original image:
+The grayscale pixel values are flattened into a 1D array using .ravel().
+A histogram with 256 bins (for pixel values 0 to 255) is plotted, showing the distribution of pixel intensities before any processing.
+
+3. Perform global histogram equalization:
+Use cv2.equalizeHist() to enhance the contrast of the grayscale image by redistributing pixel intensities more evenly.
+
+4. Plot the histogram of the equalized image:
+Similarly, plot the histogram after equalization to visualize how the pixel intensity distribution has changed (usually more spread out).
+
+5. Display the original and equalized images:
+Show the visual difference before and after histogram equalization.
+
+
+Ex2_4:
+
+1. Read the grayscale image:
+The image is loaded in grayscale mode.
+
+2. Initialize CLAHE (Contrast Limited Adaptive Histogram Equalization):
+CLAHE is created with a clipLimit of 0.3 and a tile grid size of 8x8.
+This method applies adaptive histogram equalization locally on small tiles of the image to improve contrast without over-amplifying noise.
+
+3. Apply CLAHE to the image:
+The CLAHE algorithm is applied to the grayscale image, enhancing local contrast adaptively.
+
+4. Display original and CLAHE-enhanced images:
+The original image and the CLAHE result are shown side by side for visual comparison.
+
+
+Ex3_1:
+
+1. Read two color images:
+Two images (cat_a.png and cat_b.png) are loaded in their original color format (BGR).
+
+2. Convert BGR to RGB for display:
+The images are converted from OpenCV’s default BGR format to RGB format for correct color display using matplotlib.
+
+3. Convert color images to grayscale:
+Each color image is converted into a grayscale version.
+
+4. Display images in a 2x2 grid:
+The original two color images are shown on the top row.
+Their corresponding grayscale versions are shown below in the bottom row.
+Axes are turned off for better visual clarity.
+
+Ex3_2:
+
+1. Read two color images:
+Load cat_a.png and cat_b.png in BGR color format using OpenCV.
+If either image is missing, raise an error.
+
+2. Resize second image if needed:
+If the two images have different sizes, resize the second image (img2) to match the first (img1) dimensions to enable pixel-wise operations.
+
+3. Calculate absolute difference (color):
+Compute the absolute difference between the two images in color (BGR), highlighting pixel-wise differences.
+
+4. Convert both images to grayscale:
+Convert img1 and img2 from BGR to grayscale.
+
+5. Calculate absolute difference (grayscale):
+Calculate the absolute difference between the two grayscale images.
+
+6. Enhance the grayscale difference image:
+Increase contrast by 40% (alpha=1.4) and brightness by 200 units (beta=200) using cv2.convertScaleAbs.
+
+7. Convert difference image to RGB for display:
+Convert the color difference image from BGR to RGB to display properly with matplotlib.
+
+
+Ex4_1:
+
+1. Read a color image and convert to RGB:
+Load the image file 'waterfall.jfif' using OpenCV (which reads in BGR format).
+Convert the image from BGR to RGB color space for correct color display in matplotlib.
+
+2. Split the RGB channels:
+Extract the Red, Green, and Blue channels separately from the RGB image.
+
+3. Plot histograms of each color channel:
+Create a histogram for each of the R, G, and B channels showing the distribution of pixel intensities (0 to 255).
+Use colors red, green, and blue for each histogram respectively, with some transparency (alpha=0.5) to overlay them clearly.
+
+4. Display the original image:
+Show the original RGB image next to the histogram.
+
+5. Layout and save the figure:
+Use tight_layout() to adjust subplot spacing.
+Save the combined plot as 'Color_Histogram.jpeg'.
+Show the plot window.
+
+
+Ex4_2:
+
+1. Read the image with OpenCV:
+Load the image 'waterfall.jfif' using OpenCV, which reads images in BGR format by default.
+
+2. Check if image is loaded correctly:
+If the image is None, raise an error indicating the file does not exist or the path is wrong.
+
+3. Split the image into B, G, R channels:
+Separate the blue, green, and red channels using cv2.split().
+
+4. Create images highlighting each primary color channel:
+For each color channel (Red, Green, Blue), create an image that contains only that channel while setting the other two channels to zero (black).
+For example, the red image is created by merging [0, 0, R] where zeros replace Blue and Green channels.
+
+5. Create a mixed color image with channels reordered as BRG (instead of RGB):
+Merge channels in the order Blue, Red, Green to create a new image with a swapped channel arrangement.
+
+6. Convert all images from BGR to RGB format:
+Convert these images to RGB color space for correct color display in matplotlib (which expects RGB).
+
+7. Display all four images side by side:
+Show Red, Green, Blue component images and the BRG mixed image with appropriate titles.
+Remove axis ticks for cleaner display.
+
+
+Ex4_3:
+
+1. Read the image and convert to RGB:
+Load the image 'waterfall.jfif' with OpenCV (cv2.imread), which reads it in BGR format by default.
+Convert the image from BGR to RGB color space for correct color display with matplotlib.
+
+2. Convert RGB image to HSV color space:
+Use cv2.cvtColor to convert the RGB image to HSV (Hue, Saturation, Value) format.
+HSV separates color information (Hue and Saturation) from brightness (Value), making it easier to manipulate brightness independently.
+
+3. Split the HSV channels:
+Separate the HSV image into its three channels: H (Hue), S (Saturation), and V (Value).
+
+4. Perform histogram equalization on the V channel:
+Apply cv2.equalizeHist to the Value channel (V) to improve the contrast and brightness distribution of the image without affecting its color information.
+
+5. Merge the equalized V channel back with the original H and S:
+Combine the original Hue and Saturation channels with the enhanced Value channel to create a new HSV image.
+
+6. Convert the enhanced HSV image back to RGB:
+Convert this new HSV image back to RGB color space for displaying the enhanced image.
+
+
+Ex5_1:
+
+1. Read the color image:
+Load the image file 'weather.png' using OpenCV’s cv2.imread. By default, OpenCV reads images in BGR color format.
+
+2. Convert BGR image to RGB:
+Convert the BGR image to RGB format using cv2.cvtColor so that it displays correctly with matplotlib, which expects images in RGB format.
+
+3. Convert the color image to grayscale:
+Convert the original BGR image to grayscale using cv2.cvtColor with the cv2.COLOR_BGR2GRAY flag. This results in a single-channel image representing intensity only.
+
+4. Display both images side by side:
+Create a figure with a size of 10 by 5 inches to display the images.
+In the first subplot, show the RGB color image with no axis ticks or labels and a title "Original Color Image".
+In the second subplot, show the grayscale image with a grayscale colormap, no axis, and a title "Grayscale Image".
+
+
+Ex5_2:
+
+1. Read the image weather.png using OpenCV (default BGR), then convert it to RGB for correct color display.
+
+2. Define a 3x3 sharpen filter kernel and apply it to the image using filter2D.
+
+3. Create a Butterworth low-pass filter function in the frequency domain with given cutoff and order parameters.
+
+4. Define a function to apply the Butterworth filter on each RGB channel: transform to frequency domain using FFT, multiply by the filter, then inverse FFT back to spatial domain.
+
+5. Apply the Butterworth filter to the RGB image, producing a sharpened effect by frequency filtering.
+
+6. Display and save the results of sharpening using two methods:
+- spatial domain sharpen filter (3x3 kernel)
+- frequency domain Butterworth filter.
+
+
+
